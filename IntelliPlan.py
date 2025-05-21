@@ -50,9 +50,9 @@ if st.sidebar.button("Generate Plan"):
             st.title("Welcome to IntelliPlan")
             st.text_input("Enter your nickname", key="nickname")
             if st.button("Login"):
-            if st.session_state.nickname:
-                st.session_state.logged_in = True
-                st.success(f"Hello, {st.session_state.nickname}!")
+                if st.session_state.nickname:
+                    st.session_state.logged_in = True
+                    st.success(f"Hello, {st.session_state.nickname}!")
         else:
             # Display nickname on top-right
             st.markdown(
