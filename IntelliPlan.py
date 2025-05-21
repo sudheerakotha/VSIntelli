@@ -86,43 +86,43 @@ if st.sidebar.button("Generate Plan"):
 
             # Generate detailed study plan
             if st.sidebar.button("Generate Detailed Plan"):
-            try:
-                today = datetime.now()
-                days_left = (datetime.combine(exam_date, datetime.min.time()) - today).days
+                try:
+                    today = datetime.now()
+                    days_left = (datetime.combine(exam_date, datetime.min.time()) - today).days
 
-                if days_left <= 0:
-                st.error("Exam date must be in the future!")
-                else:
-                topics_list = []
-                if syllabus_file:
-                    topics_list = syllabus_file.read().decode("utf-8").splitlines()
-                elif manual_syllabus:
-                    topics_list = [topic.strip() for topic in manual_syllabus.split(',') if topic.strip()]
+                    if days_left <= 0:
+                        st.error("Exam date must be in the future!")
+                    else:
+                        topics_list = []
+                        if syllabus_file:
+                            topics_list = syllabus_file.read().decode("utf-8").splitlines()
+                        elif manual_syllabus:
+                            topics_list = [topic.strip() for topic in manual_syllabus.split(',') if topic.strip()]
 
-                if not topics_list:
-                    st.error("No topics provided!")
-                else:
-                    study_plan = []
-                    topics_per_day = max(1, len(topics_list) // days_left)
+                        if not topics_list:
+                            st.error("No topics provided!")
+                        else:
+                            study_plan = []
+                            topics_per_day = max(1, len(topics_list) // days_left)
 
-                    for day in range(days_left):
-                    date = today + timedelta(days=day)
-                    topics = topics_list[day * topics_per_day:(day + 1) * topics_per_day]
-                    study_plan.append({
-                        'date': date.strftime('%Y-%m-%d'),
-                        'topics': topics,
-                        'hours': daily_hours
-                    })
+                            for day in range(days_left):
+                                date = today + timedelta(days=day)
+                                topics = topics_list[day * topics_per_day:(day + 1) * topics_per_day]
+                                study_plan.append({
+                                    'date': date.strftime('%Y-%m-%d'),
+                                    'topics': topics,
+                                    'hours': daily_hours
+                                })
 
-                    # Display the study plan with progress bars
-                    st.success("Detailed Study Plan Generated!")
-                    for day_plan in study_plan:
-                    st.write(f"**Date:** {day_plan['date']}")
-                    st.write(f"**Topics:** {', '.join(day_plan['topics'])}")
-                    st.write(f"**Hours:** {day_plan['hours']}")
-                    for topic in day_plan['topics']:
-                        st.checkbox(f"Mark as done: {topic}")
-                    st.write("---")
+                            # Display the study plan with progress bars
+                            st.success("Detailed Study Plan Generated!")
+                            for day_plan in study_plan:
+                                st.write(f"**Date:** {day_plan['date']}")
+                                st.write(f"**Topics:** {', '.join(day_plan['topics'])}")
+                                st.write(f"**Hours:** {day_plan['hours']}")
+                                for topic in day_plan['topics']:
+                                    st.checkbox(f"Mark as done: {topic}")
+                                st.write("---")
 
-            except Exception as e:
-                st.error(f"Error: {str(e)}")
+                except Exception as e:
+                    st.error(f"Error: {str(e)}")
